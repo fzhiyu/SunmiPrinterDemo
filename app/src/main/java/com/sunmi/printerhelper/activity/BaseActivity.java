@@ -12,9 +12,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sunmi.printerhelper.R;
-import com.sunmi.printerhelper.utils.BluetoothUtil;
-import com.sunmi.printerhelper.utils.BytesUtil;
-import com.sunmi.printerhelper.utils.ESCUtil;
 import com.sunmi.printerhelper.utils.SunmiPrintHelper;
 
 import sunmi.sunmiui.dialog.DialogCreater;
@@ -44,11 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *  All style settings will be restored to default
      */
     private void initPrinterStyle() {
-        if(BluetoothUtil.isBlueToothPrinter){
-            BluetoothUtil.sendData(ESCUtil.init_printer());
-        }else{
-            SunmiPrintHelper.getInstance().initPrinter();
-        }
+        SunmiPrintHelper.getInstance().initPrinter();
     }
 
     /**
@@ -80,24 +73,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     void setSubTitle(){
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
-            if(BluetoothUtil.isBlueToothPrinter){
-                actionBar.setSubtitle("bluetooth®");
+            if(SunmiPrintHelper.getInstance().sunmiPrinter == SunmiPrintHelper.NoSunmiPrinter){
+                actionBar.setSubtitle("no printer");
+            }else if(SunmiPrintHelper.getInstance().sunmiPrinter == SunmiPrintHelper.CheckSunmiPrinter){
+                actionBar.setSubtitle("connecting");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setSubTitle();
+                    }
+                }, 2000);
+            }else if(SunmiPrintHelper.getInstance().sunmiPrinter == SunmiPrintHelper.FoundSunmiPrinter){
+                actionBar.setSubtitle("");
             }else{
-                if(SunmiPrintHelper.getInstance().sunmiPrinter == SunmiPrintHelper.NoSunmiPrinter){
-                    actionBar.setSubtitle("no printer");
-                }else if(SunmiPrintHelper.getInstance().sunmiPrinter == SunmiPrintHelper.CheckSunmiPrinter){
-                    actionBar.setSubtitle("connecting");
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            setSubTitle();
-                        }
-                    }, 2000);
-                }else if(SunmiPrintHelper.getInstance().sunmiPrinter == SunmiPrintHelper.FoundSunmiPrinter){
-                    actionBar.setSubtitle("");
-                }else{
-                    SunmiPrintHelper.getInstance().initSunmiPrinterService(this);
-                }
+                SunmiPrintHelper.getInstance().initSunmiPrinterService(this);
             }
         }
     }
@@ -135,12 +124,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String text = mEditTextDialog.getEditText().getText().toString();
-                        byte[] data = BytesUtil.getBytesFromHexString(text);
-                        if(BluetoothUtil.isBlueToothPrinter){
-                            BluetoothUtil.sendData(data);
-                        }else{
-                            SunmiPrintHelper.getInstance().sendRawData(data);
-                        }
+//                        byte[] data = BytesUtil.getBytesFromHexString(text);
+//                        SunmiPrintHelper.getInstance().sendRawData(data);
                         mEditTextDialog.cancel();
                     }
                 }, null);
