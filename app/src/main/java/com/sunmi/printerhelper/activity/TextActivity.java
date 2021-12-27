@@ -39,7 +39,7 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
     private String testFont;
     private boolean isBold, isUnderLine;
 
-    private String[] mStrings = new String[]{"CP437", "CP850", "CP860", "CP863", "CP865", "CP857", "CP737", "CP928", "Windows-1252", "CP866", "CP852", "CP858", "CP874", "Windows-775", "CP855", "CP862", "CP864", "GB18030", "BIG5", "KSC5601", "utf-8"};
+    private String[] mStrings = new String[]{"CP437", "CP850", "CP860", "CP863", "CP865", "CP857", "CP737", "CP920", "Windows-1252", "CP866", "CP852", "CP858", "CP874", "CP855", "CP862", "CP864", "GB18030", "BIG5", "KSC5601", "utf-8"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,172 +52,173 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
         record = 17;
         isBold = false;
         isUnderLine = false;
-        mTextView = findViewById(R.id.text_text_font);
-        mTextView1 = findViewById(R.id.text_text_character);
-        mTextView2 = findViewById(R.id.text_text_size);
-        mCheckBox1 = findViewById(R.id.text_bold);
-        mCheckBox2 = findViewById(R.id.text_underline);
+//        mTextView = findViewById(R.id.text_text_font);
+//        mTextView1 = findViewById(R.id.text_text_character);
+//        mTextView2 = findViewById(R.id.text_text_size);
+//        mCheckBox1 = findViewById(R.id.text_bold);
+//        mCheckBox2 = findViewById(R.id.text_underline);
         mEditText = findViewById(R.id.text_text);
+//
+//        mLinearLayout = findViewById(R.id.text_all);
+//        mLayout = findViewById(R.id.text_set);
+//
+//        mLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                Rect r = new Rect();
+//                mLinearLayout.getWindowVisibleDisplayFrame(r);
+//                if(r.bottom < 800){
+//                    mLayout.setVisibility(View.GONE);
+//                }else{
+//                    mLayout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+//
+//        mCheckBox1.setOnCheckedChangeListener(this);
+//        mCheckBox2.setOnCheckedChangeListener(this);
 
-        mLinearLayout = findViewById(R.id.text_all);
-        mLayout = findViewById(R.id.text_set);
-
-        mLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect r = new Rect();
-                mLinearLayout.getWindowVisibleDisplayFrame(r);
-                if(r.bottom < 800){
-                    mLayout.setVisibility(View.GONE);
-                }else{
-                    mLayout.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        mCheckBox1.setOnCheckedChangeListener(this);
-        mCheckBox2.setOnCheckedChangeListener(this);
-
-        findViewById(R.id.text_font).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String[] fontStrings = new String[]{getResources().getString(R.string.sunmi_font),
-                        getResources().getString(R.string.custom_font)};
-                final ListDialog listDialog = DialogCreater.createListDialog(TextActivity.this,
-                        getResources().getString(R.string.type_text),
-                        getResources().getString(R.string.cancel),
-                        fontStrings);
-                listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
-                    @Override
-                    public void OnItemClick(int position) {
-                        mTextView.setText(fontStrings[position]);
-                        if(position > 0){
-                            testFont = "test.ttf";
-                        } else {
-                            testFont = null;
-                        }
-                        listDialog.cancel();
-                    }
-                });
-                listDialog.show();
-            }
-        });
+//        findViewById(R.id.text_font).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final String[] fontStrings = new String[]{getResources().getString(R.string.sunmi_font),
+//                        getResources().getString(R.string.custom_font)};
+//                final ListDialog listDialog = DialogCreater.createListDialog(TextActivity.this,
+//                        getResources().getString(R.string.type_text),
+//                        getResources().getString(R.string.cancel),
+//                        fontStrings);
+//                listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
+//                    @Override
+//                    public void OnItemClick(int position) {
+//                        mTextView.setText(fontStrings[position]);
+//                        if(position > 0){
+//                            testFont = "test.ttf";
+//                        } else {
+//                            testFont = null;
+//                        }
+//                        listDialog.cancel();
+//                    }
+//                });
+//                listDialog.show();
+//            }
+//        });
 
 
-        findViewById(R.id.text_character).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ListDialog listDialog = DialogCreater.createListDialog(TextActivity.this, getResources().getString(R.string.characterset), getResources().getString(R.string.cancel), mStrings);
-                listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
-                    @Override
-                    public void OnItemClick(int position) {
-                        mTextView1.setText(mStrings[position]);
-                        record = position;
-                        listDialog.cancel();
-                    }
-                });
-                listDialog.show();
-            }
-        });
-
-        findViewById(R.id.text_size).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSeekBarDialog(TextActivity.this, getResources().getString(R.string.size_text), 12, 36, mTextView2);
-            }
-        });
+//        findViewById(R.id.text_character).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final ListDialog listDialog = DialogCreater.createListDialog(TextActivity.this, getResources().getString(R.string.characterset), getResources().getString(R.string.cancel), mStrings);
+//                listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
+//                    @Override
+//                    public void OnItemClick(int position) {
+//                        mTextView1.setText(mStrings[position]);
+//                        record = position;
+//                        listDialog.cancel();
+//                    }
+//                });
+//                listDialog.show();
+//            }
+//        });
+//
+//        findViewById(R.id.text_size).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showSeekBarDialog(TextActivity.this, getResources().getString(R.string.size_text), 12, 36, mTextView2);
+//            }
+//        });
     }
 
     public void onClick(View view) {
-        String content = mEditText.getText().toString();
+        String content = "mEditText.getText().toString()";
 
-        float size = Integer.parseInt(mTextView2.getText().toString());
+//        float size = Integer.parseInt(mTextView2.getText().toString());
+        float size = 12;
         if (!BluetoothUtil.isBlueToothPrinter) {
             SunmiPrintHelper.getInstance().printText(content, size, isBold, isUnderLine, testFont);
             SunmiPrintHelper.getInstance().feedPaper();
         } else {
-            printByBluTooth(content);
+//            printByBluTooth(content);
         }
     }
 
-    private void printByBluTooth(String content) {
-        try {
-            if (isBold) {
-                BluetoothUtil.sendData(ESCUtil.boldOn());
-            } else {
-                BluetoothUtil.sendData(ESCUtil.boldOff());
-            }
+//    private void printByBluTooth(String content) {
+//        try {
+//            if (isBold) {
+//                BluetoothUtil.sendData(ESCUtil.boldOn());
+//            } else {
+//                BluetoothUtil.sendData(ESCUtil.boldOff());
+//            }
+//
+//            if (isUnderLine) {
+//                BluetoothUtil.sendData(ESCUtil.underlineWithOneDotWidthOn());
+//            } else {
+//                BluetoothUtil.sendData(ESCUtil.underlineOff());
+//            }
+//
+//            if (record < 17) {
+//                BluetoothUtil.sendData(ESCUtil.singleByte());
+//                BluetoothUtil.sendData(ESCUtil.setCodeSystemSingle(codeParse(record)));
+//            } else {
+//                BluetoothUtil.sendData(ESCUtil.singleByteOff());
+//                BluetoothUtil.sendData(ESCUtil.setCodeSystem(codeParse(record)));
+//            }
+//
+//            BluetoothUtil.sendData(content.getBytes(mStrings[record]));
+//            BluetoothUtil.sendData(ESCUtil.nextLine(3));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            if (isUnderLine) {
-                BluetoothUtil.sendData(ESCUtil.underlineWithOneDotWidthOn());
-            } else {
-                BluetoothUtil.sendData(ESCUtil.underlineOff());
-            }
-
-            if (record < 17) {
-                BluetoothUtil.sendData(ESCUtil.singleByte());
-                BluetoothUtil.sendData(ESCUtil.setCodeSystemSingle(codeParse(record)));
-            } else {
-                BluetoothUtil.sendData(ESCUtil.singleByteOff());
-                BluetoothUtil.sendData(ESCUtil.setCodeSystem(codeParse(record)));
-            }
-
-            BluetoothUtil.sendData(content.getBytes(mStrings[record]));
-            BluetoothUtil.sendData(ESCUtil.nextLine(3));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private byte codeParse(int value) {
-        byte res = 0x00;
-        switch (value) {
-            case 0:
-                res = 0x00;
-                break;
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                res = (byte) (value + 1);
-                break;
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-                res = (byte) (value + 8);
-                break;
-            case 12:
-                res = 21;
-                break;
-            case 13:
-                res = 33;
-                break;
-            case 14:
-                res = 34;
-                break;
-            case 15:
-                res = 36;
-                break;
-            case 16:
-                res = 37;
-                break;
-            case 17:
-            case 18:
-            case 19:
-                res = (byte) (value - 17);
-                break;
-            case 20:
-                res = (byte) 0xff;
-                break;
-            default:
-                break;
-        }
-        return (byte) res;
-    }
+//    private byte codeParse(int value) {
+//        byte res = 0x00;
+//        switch (value) {
+//            case 0:
+//                res = 0x00;
+//                break;
+//            case 1:
+//            case 2:
+//            case 3:
+//            case 4:
+//                res = (byte) (value + 1);
+//                break;
+//            case 5:
+//            case 6:
+//            case 7:
+//            case 8:
+//            case 9:
+//            case 10:
+//            case 11:
+//                res = (byte) (value + 8);
+//                break;
+//            case 12:
+//                res = 21;
+//                break;
+//            case 13:
+//                res = 33;
+//                break;
+//            case 14:
+//                res = 34;
+//                break;
+//            case 15:
+//                res = 36;
+//                break;
+//            case 16:
+//                res = 37;
+//                break;
+//            case 17:
+//            case 18:
+//            case 19:
+//                res = (byte) (value - 17);
+//                break;
+//            case 20:
+//                res = (byte) 0xff;
+//                break;
+//            default:
+//                break;
+//        }
+//        return (byte) res;
+//    }
 
     /**
      * 自定义的seekbar dialog
